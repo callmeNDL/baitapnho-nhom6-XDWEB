@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='jquery-3.6.0.min.js'></script>
+</head>
+<script >
+function F1(value){
+    $.ajax({
+            url:'https://6214b20d89fad53b1f1bb453.mockapi.io/sanpham/'+value,
+            type:'Delete',//mặc định là get
+            dataType:'json',
+           data:'ketqua2='+$('#ketqua2').val(),
+                    async: false,
+                    success: function(dataReturn) {
+                        $('#ketqua3').html('');//XOÁ
+                        var result=confirm("Xoá Thành Công")
+                        if(result)
+                        F2();
+
+                },
+                    error: function(error){
+                        console.error();
+                    }
+            //  success:function(dataReturn){
+                // console.log(dataReturn);
+                // $('#ketqua3').html('');//XOÁ
+
+                // $.each(dataReturn,function(k,v){
+                // var s=`<div onclick="F1(${v.id})">
+                //   ${v.id}-${v.name}-${v.price}<hr>
+                //   <img src="${v.avatar}" ">
+                // </div>`;
+                
+                // $('#ketqua3').append(s);
+             /*   if(v.gia*1>120000)
+                $('#ketqua3').append(s);
+                else
+                $('#ketqua4').append(s);*/
+            // });
+           
+            // }  
+        })
+}
+    function F2()
+    {
+        $.ajax({
+            url:'https://6214b20d89fad53b1f1bb453.mockapi.io/sanpham',
+            type:'Get',//mặc định là get
+            dataType:'json',
+            data:'ketqua2='+$('#ketqua2').val(),
+            success:function(dataReturn){
+                console.log(dataReturn);
+                $('#ketqua3').html('');//XOÁ
+
+            $.each(dataReturn,function(k,v){
+                var s=`<div onclick="F1(${v.id})">
+                  ${v.id}-${v.name}-${v.price}<hr>
+                  <img src="${v.avatar}" ">
+                </div>`;
+                
+                $('#ketqua3').append(s);
+             /*   if(v.gia*1>120000)
+                $('#ketqua3').append(s);
+                else
+                $('#ketqua4').append(s);*/
+            });
+            }
+        });
+        //$('#ketqua2').load('vd2.php?v='+value);
+    }
+   
+</script>
+<body>
+
+   Nhap Ten Sach<input type="text" id="ketqua2">
+   <input type="button" value="Search" onclick="F2()">
+   <div id='ketqua3'></div><hr>
+   <div id='ketqua4'></div>
+</body>
+</html>
